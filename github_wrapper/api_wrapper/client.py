@@ -22,4 +22,4 @@ def add_pull_request(**params):
     print(params)
     request.post_pull_request(params)
 
-add_pull_request(base='Mariamjamal32-patch-1', title='Testing PR Creation', body='Reject this PR please', head='Mariam/ImplementGetApiWrappers')
+# add_pull_request(base='Mariamjamal32-patch-1', title='Testing PR Creation', body='Reject this PR please', head='Mariam/ImplementGetApiWrappers')
