@@ -20,5 +20,3 @@ def add_pull_request(**params):
 
 def edit_pull_request(pull_id, **params):
     request.update_pull_request(pull_id, params)
-
-add_pull_request(base='Mariamjamal32-patch-1', head='Mariam/ImplementGetApiWrappers')
