@@ -1,9 +1,9 @@
-import gwrapper
+from gwrapper import wrapper
 
-request = gwrapper.GWrapper(
-    "https://api.github.com/repos/oakbani/f3Github/pulls",
-    username='',
-    pwd='')
+request = wrapper.GWrapper(
+    "https://api.github.com/repos/oakbani/f3Github",
+    username='mariamjamal32',
+    pwd='Mariam1374')
 
 
 def get_all_pulls(**params):
