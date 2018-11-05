@@ -29,7 +29,9 @@ class String_Filter(object):
                 print(filename_list)
                 self.filter_check(self.text_list, filename_list, pr)
 
-        return self.response_list
+        return [i for n, i in enumerate(self.response_list)
+                if i not in self.response_list[n+1:]
+                ]
 
     def filter_check(self, string_list, split_string, pr):
         if (self.filter == 'any'):
