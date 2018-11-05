@@ -1,9 +1,12 @@
 from gwrapper import wrapper
 
 request = wrapper.GWrapper(
-    "https://api.github.com/repos/oakbani/f3Github",
-    username='mariamjamal32',
-    pwd='Mariam1374')
+    '''{
+        "url": "https://api.github.com/repos/oakbani/f3Github",
+        "username": "mariamjamal32",
+        "pwd": "Mariam1374"
+    }'''
+)
 
 
 def get_all_pulls(**params):
@@ -28,3 +31,15 @@ def add_pull_request(**params):
 
 def edit_pull_request(pull_id, **params):
     request.update_pull_request(pull_id, params)
+
+
+def get_pr_by_commits():
+    request.get_pr_with_num_of_commits(100, 'lt', state="closed")
+
+
+def get_pr_by_files():
+    request.get_pr_with_num_of_files(80, 'lt', state="closed")
+
+
+# request.get_pr_by_commit_text(['check', 'abc'], 'all', state="closed")
+request.get_pr_by_file_name(['.gitignore', 'green'], 'all', state='closed')

@@ -1,61 +1,54 @@
+from gwrapper.number_filter import Filter
+from gwrapper.string_filter import String_Filter
+import json
 import requests
 
 
 class GWrapper(object):
-    def __new__(cls, url, username, pwd):
+    def __new__(cls, json_init):
+        url = json.loads(json_init)['url']
         if(requests.get(url).headers['Status'][0:3] == '404'):
             print("No repository exists with url: ", url)
             return None
         else:
             return super(GWrapper, cls).__new__(cls)
 
-    def __init__(self, url, username, pwd):
-        self.url = url+'/pulls'
-        self.auth = (username, pwd)
+    def __init__(self, json_init):
+        self.url = json.loads(json_init)['url']+'/pulls'
+        self.auth = (
+            json.loads(json_init)['username'],
+            json.loads(json_init)['pwd']
+        )
 
     # to list all pull requests made to a repos
     # params: base, state, sort, head, direction
-    def list_pulls(self, params):
-        print(params)
-        return print(requests.get(self.url, params=params).text)
+    def list_pulls(self, params={}):
+        return requests.get(self.url, params=params, auth=self.auth)
 
-    # to list a pull rquest by id
-    # pull_id required
-    def list_pull(self, pull_id):
-        print(requests.get(self.url+'/'+str(pull_id), auth=self.auth).text)
+    # get pull requests by number of commits
+    def get_pr_with_num_of_commits(self, num, filter, **params):
+        pull_requests = self.list_pulls(params).json()
+        f = Filter(pull_requests, num, filter, 'commits', self.auth)
+        return print(f.filter_by_number())
 
-    # list commits on a pull request
-    # pull_id required
-    def list_pull_commits(self, pull_id):
-        print(
-            requests.get(self.url+'/'+str(pull_id)+'/commits', auth=self.auth)
-            .text
+    # get pull requests by number of files changed
+    def get_pr_with_num_of_files(self, num, filter, **params):
+        pull_requests = self.list_pulls(params).json()
+        f = Filter(pull_requests, num, filter, 'files', self.auth)
+        return print(f.filter_by_number())
+
+    # get pull requests by commit message keywords
+    def get_pr_by_commit_text(self, text_list, filter, **params):
+        pull_requests = self.list_pulls(params).json()
+        f = String_Filter(
+            pull_requests, text_list, filter, 'commits', self.auth
         )
+        return print(f.filter_by_string())
 
-    # list files on a pull request
-    # pull_id required
-    def list_pull_files(self, pull_id):
-        print(
-            requests.get(self.url+'/'+str(pull_id)+'/files', auth=self.auth)
-            .text
+    # get pull requests by file name keywords
+    def get_pr_by_file_name(self, name_list, filter, **params):
+        pull_requests = self.list_pulls(params).json()
+        f = String_Filter(
+            pull_requests, name_list, filter, 'files', self.auth
         )
-
-    # post pull request
-    # required payload: base, title, head, pull_id
-    def post_pull_request(self, params):
-        required_params = ['base', 'title', 'head']
-        if not all(x in params.keys() for x in required_params):
-            print('Insufficient parameters. Required Params:')
-            for x in required_params:
-                print(x)
-        else:
-            return print(
-                requests.post(self.url, json=params, auth=self.auth).text
-            )
-
-    # update pull request
-    def update_pull_request(self, pull_id, params):
-        return print(
-            requests.patch(
-                self.url+'/'+str(pull_id), json=params, auth=self.auth
-            ).text)
+        return print(f.filter_by_string())
