@@ -2,9 +2,15 @@ from gwrapper import wrapper
 
 request = wrapper.GWrapper(
     '''{
-        "url": "https://api.github.com/repos/oakbani/f3Github",
-        "username": "mariamjamal32",
-        "pwd": "Mariam1374"
+        "url": ["https://api.github.com/repos/oakbani/f3Github"],
+        "credentials":[
+            {
+                "username": "1234",
+                "pwd": "1234"
+            }
+        ],
+
+        "version": 2
     }'''
 )
 
@@ -42,4 +48,4 @@ def get_pr_by_files():
 
 
 # request.get_pr_by_commit_text(['check', 'abc'], 'all', state="closed")
-request.get_pr_by_file_name(['.gitignore', 'green'], 'all', state='closed')
+# request.get_pr_by_file_name(['.gitignore', 'green'], 'all', state='closed')

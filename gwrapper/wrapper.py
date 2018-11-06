@@ -1,3 +1,4 @@
+import fastjsonschema
 from gwrapper.number_filter import Filter
 from gwrapper.string_filter import String_Filter
 import json
@@ -6,12 +7,23 @@ import requests
 
 class GWrapper(object):
     def __new__(cls, json_init):
-        url = json.loads(json_init)['url']
-        if(requests.get(url).headers['Status'][0:3] == '404'):
+        with open('gwrapper/schemas/wrapper_schema.json') as json_data:
+            schema = json.load(json_data)
+
+        try:
+            validate = fastjsonschema.compile(schema)
+            validate(json.loads(json_init))
+            url = json.loads(json_init)['url']
+            if(requests.get(url).headers['Status'][0:3] == '404'):
+                raise ValueError()
+            else:
+                return super(GWrapper, cls).__new__(cls)
+        except fastjsonschema.JsonSchemaException as e:
+            print(e.message)
+            return None
+        except ValueError as v:
             print("No repository exists with url: ", url)
             return None
-        else:
-            return super(GWrapper, cls).__new__(cls)
 
     def __init__(self, json_init):
         self.url = json.loads(json_init)['url']+'/pulls'
