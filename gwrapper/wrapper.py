@@ -21,7 +21,7 @@ class GWrapper(object):
         except fastjsonschema.JsonSchemaException as e:
             print(e.message)
             return None
-        except ValueError as v:
+        except ValueError:
             print("No repository exists with url: ", url)
             return None
 
