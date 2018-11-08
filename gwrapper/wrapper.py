@@ -69,7 +69,8 @@ class GWrapper(object):
             pull_requests, text_list, filter, 'commits', self.auth
         )
         response = f.filter_by_string()
-        msg = str(len(response)) + ' pull requests found with commit text filter'
+        msg = str(len(response)) + ' pull requests' +
+        'found with commit text filter'
         self.logger.log(logging.INFO, msg)
         return print(response)
 
@@ -80,6 +81,7 @@ class GWrapper(object):
             pull_requests, name_list, filter, 'files', self.auth
         )
         response = f.filter_by_string()
-        msg = str(len(response)) + ' pull requests found with file name filter'
+        msg = str(len(response)) + ' pull requests' +
+        'found with file name filter'
         self.logger.log(logging.INFO, msg)
         return print(response)
