@@ -7,7 +7,5 @@ install:
   - "pip3 install pipenv"
   - "pipenv lock"
   - "pipenv sync"
-before_script:
-  - "flake8"
-script:
-  - "nosetests -v"
+before_script: "flake8"
+script: "nosetests -v"
