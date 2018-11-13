@@ -35,34 +35,41 @@
           "username": {
             "$ref": "#/definitions/username"
           }
-       },
+        },
        "required":["version", "url", "username", "pwd"]
-     },
+      },
      "else": {
-       "properties":{
-         "url": {
-           "type":"array",
-           "items":{
-             "type": "string"
-           }
-         },
-         "credentials": {
-           "type":"array",
-           "items":{
-             "type":"object",
-             "properties":{
-               "pwd": {
-                  "$ref": "#/definitions/pwd"
-                },
-                "username": {
-                  "$ref": "#/definitions/username"
-                }
-             }
-           }
+       "if": {
+         "properties":{
+           "version": { "enum": [2] }
          }
        },
-       "required":["version", "url", "credentials"]
-     }
-   }
+       "then": {
+         "properties":{
+           "url": {
+             "type":"array",
+             "items":{
+               "type": "string"
+             }
+           },
+           "credentials": {
+             "type":"array",
+             "items":{
+               "type":"object",
+               "properties":{
+                 "pwd": {
+                    "$ref": "#/definitions/pwd"
+                  },
+                  "username": {
+                    "$ref": "#/definitions/username"
+                  }
+               }
+             }
+           }
+         },
+         "required":["version", "url", "credentials"]
+       }
+      }
+    }
   ]
 }

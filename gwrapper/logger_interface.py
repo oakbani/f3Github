@@ -12,7 +12,7 @@ class ChildLogger(ExampleLogger):
         self,
         handler=logging.StreamHandler(),
         logger_name=__name__,
-        min_level=logging.ERROR
+        min_level=logging.INFO
     ):
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(min_level)
@@ -27,7 +27,7 @@ class NoOpLogger(ExampleLogger):
         self,
         handler=logging.StreamHandler(),
         logger_name=__name__,
-        min_level=logging.ERROR
+        min_level=logging.INFO
     ):
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(min_level)

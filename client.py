@@ -39,7 +39,7 @@ request = wrapper.GWrapper(
         "pwd": "Mariam1374",
         "version": 1
     }''',
-    logger=ClientLogger()
+    ClientLogger()
 )
 
 
@@ -60,7 +60,8 @@ def get_pull_files(pull_id):
 
 
 def get_pr_by_commits():
-    request.get_pr_with_num_of_commits(2, 'gt', state="closed")
+    # request.get_pr_with_num_of_commits(2, 'gt', state="closed")
+    request.get_pr_by_commit_text(['check', 'abc'], 'any', state="closed")
 
 
 def get_pr_by_files():
