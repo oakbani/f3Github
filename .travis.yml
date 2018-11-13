@@ -5,6 +5,7 @@ python:
   - "3.6"
 install:
   - "pip3 install pipenv"
+  - "pipenv install flake8"
   - "pipenv lock"
   - "pipenv sync"
 before_script: "flake8"
