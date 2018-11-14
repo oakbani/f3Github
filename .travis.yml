@@ -6,7 +6,11 @@ python:
 install:
   - "pip3 install pipenv"
   - "pipenv install flake8"
+  - "pipenv install coveralls"
+  - "pipenv install"
   - "pipenv lock"
   - "pipenv sync"
-before_script: "flake8"
-script: "nosetests -v"
+before_script:
+  - "flake8"
+script:
+  - "nosetests --with-coverage --cover-package=gwrapper" 
