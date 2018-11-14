@@ -5,7 +5,12 @@ python:
   - "3.6"
 install:
   - "pip3 install pipenv"
+  - "pipenv install flake8"
+  - "pipenv install coveralls"
+  - "pipenv install"
   - "pipenv lock"
   - "pipenv sync"
-script:
+before_script:
   - "flake8"
+script:
+  - "nosetests --with-coverage --cover-package=gwrapper" 
