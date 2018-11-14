@@ -8,9 +8,34 @@ from tests import const
 import unittest
 
 mock_pull_response = const.mock_response
+list_pulls_response = const.pull_response
+pr_by_commits = const.pr_commits
+pr_by_file_num = const.pr_file_numbers
 
 
 class TestWrapper(unittest.TestCase):
+
+    def test_invalid_repo_url(self):
+        with mock.patch(
+            'gwrapper.logger_interface.ChildLogger.log',
+        ) as mock_client_log:
+            invalid_url = "https://api.github.com/repos/oakbani/fGithub"
+            test_client = wrapper.GWrapper(
+                '''{
+                    "url": "https://api.github.com/repos/oakbani/fGithub",
+                    "username": "MariamJamal32",
+                    "pwd": "Mariam1374",
+                    "version": 1
+                }''',
+                logger=logger_interface.ChildLogger()
+
+            )
+            print(test_client)
+            self.assertIsNone(test_client)
+            self.assertRaises(ValueError)
+        mock_client_log.assert_called_with(
+            40, "No repository exists with url: {}".format(invalid_url)
+        )
 
     def test_invalid_json_versions(self):
         with mock.patch(
@@ -72,8 +97,23 @@ class TestWrapper(unittest.TestCase):
             }''',
             logger=logger_interface.ChildLogger()
         )
-        response = requests.get(test_client.url)
+        response = requests.get(test_client.url, auth=test_client.auth)
         assert_true(response.ok)
+
+    def test_list_pulls(self):
+        test_client = wrapper.GWrapper(
+            '''{
+                "url": "https://api.github.com/repos/oakbani/f3Github",
+                "username": "MariamJamal32",
+                "pwd": "Mariam1374",
+                "version": 1
+            }''',
+            logger=logger_interface.ChildLogger()
+        )
+        self.assertEqual(
+            test_client.list_pulls(),
+            list_pulls_response
+        )
 
     def test_filter_pull_requests(self):
         test_client = wrapper.GWrapper(
@@ -95,15 +135,32 @@ class TestWrapper(unittest.TestCase):
                 ),
                 list
             )
+            self.assertListEqual(
+                test_client.get_pr_with_num_of_commits(
+                    2, 'gt', state="closed"
+                ),
+                pr_by_commits
+            )
             self.assertIsInstance(
                 test_client.get_pr_by_commit_text(
                     ['check', 'abc'], 'any', state="closed"
                 ),
                 list
             )
+            self.assertEqual(
+                test_client.get_pr_by_commit_text(
+                    ['check', 'abc'], 'any', state="closed"
+                ),
+                pr_by_commits
+            )
+
             self.assertIsInstance(
-                test_client.get_pr_with_num_of_files(80, 'lt', state="closed"),
+                test_client.get_pr_with_num_of_files(2, 'lt', state="closed"),
                 list
+            )
+            self.assertEqual(
+                test_client.get_pr_with_num_of_files(2, 'gt', state="closed"),
+                pr_by_file_num
             )
             self.assertIsInstance(
                 test_client.get_pr_by_file_name(
@@ -111,8 +168,14 @@ class TestWrapper(unittest.TestCase):
                 ),
                 list
             )
+            self.assertListEqual(
+                test_client.get_pr_by_file_name(
+                    ['.gitignore', 'green'], 'all', state='closed'
+                ),
+                []
+            )
         self.assertTrue(mock_list_pulls.called)
-        mock_list_pulls.assert_called_with({'state': 'closed'})
+        mock_list_pulls.assert_called_with({"state": "closed"})
 
 
 if __name__ == '__main__':

@@ -42,6 +42,16 @@ request = wrapper.GWrapper(
     ClientLogger()
 )
 
+test_client = wrapper.GWrapper(
+    '''{
+        "url": "https://api.github.com/repos/oakbani/f3Github",
+        "username": "MariamJamal32",
+        "pwd": "Mariam1374",
+        "version": 1
+    }''',
+    logger=logger_interface.ChildLogger()
+)
+
 
 def get_all_pulls(**params):
     request.list_pulls(params)
@@ -60,14 +70,19 @@ def get_pull_files(pull_id):
 
 
 def get_pr_by_commits():
-    # request.get_pr_with_num_of_commits(2, 'gt', state="closed")
-    request.get_pr_by_commit_text(['check', 'abc'], 'any', state="closed")
+    y = test_client.get_pr_with_num_of_commits(2, 'gt', state="closed")
+    # z = request.get_pr_by_commit_text(
+    #     ['check', 'abc'], 'any', state="closed"
+    # )
+    print(y)
 
 
 def get_pr_by_files():
-    request.get_pr_with_num_of_files(80, 'lt', state="closed")
+    return request.get_pr_with_num_of_files(2, 'lt', state="closed")
 
 
+# z = get_pr_by_files()
 get_pr_by_commits()
 # request.get_pr_by_commit_text(['check', 'abc'], 'all', state="closed")
 # request.get_pr_by_file_name(['.gitignore', 'green'], 'all', state='closed')
+# print(z)

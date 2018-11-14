@@ -25,7 +25,7 @@ class GWrapper(object):
             logging.log(40, e.message)
             return None
         except ValueError:
-            logger.log(40, "No repository exists with url: ", url)
+            logger.log(40, "No repository exists with url: %s" % url)
             return None
 
     def __init__(self, json_init, logger=None):
