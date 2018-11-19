@@ -11,9 +11,7 @@ setup(
                      "with commit and file filters",
     long_description_content_type="text/markdown",
     url="https://github.com/oakbani/f3Github",
-    packages=find_packages(
-      exclude=['tests']
-    ),
+    packages=find_packages(),
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
