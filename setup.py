@@ -2,8 +2,8 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name="github-pr-utility",
-    version="0.1",
+    name="pr_filter_utility",
+    version="0.0.1",
     author="Mariam Jamal",
     author_email="mjamal@folio3.com",
     description="Package to provide utility tools for Github Pull Requests",
@@ -19,7 +19,7 @@ setup(
         "Operating System :: OS Independent",
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5.5',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6'
     ],
     test_suite='tests',
