@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name="github_api_wrapper",
+    name="f3Github",
     version="0.1",
     author="Mariam Jamal",
     author_email="mjamal@folio3.com",
@@ -19,4 +19,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    test_suite='f3Github.tests',
 )
