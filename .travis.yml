@@ -1,7 +1,6 @@
 language: python
 python:
-  - "3.4"
-  - "3.5.5"
+  - "3.5"
   - "3.6"
 install:
   - "pip3 install pipenv"
@@ -13,4 +12,4 @@ install:
 before_script:
   - "flake8"
 script:
-  - "nosetests --with-coverage --cover-package=gwrapper" 
+  - "nosetests --with-coverage --cover-package=gwrapper"
