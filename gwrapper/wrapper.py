@@ -10,7 +10,7 @@ import requests
 class GWrapper(object):
     def __new__(cls, json_init, logger=None):
         logger = logger or logger_interface.NoOpLogger()
-        with open('gwrapper/schemas/wrapper_schema.json') as json_data:
+        with open('schemas/wrapper_schema.json') as json_data:
             schema = json.load(json_data)
         try:
             validate = fastjsonschema.compile(schema)
