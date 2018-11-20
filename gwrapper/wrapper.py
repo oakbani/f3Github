@@ -14,10 +14,7 @@ class GWrapper(object):
         json_file = pkg_resources.resource_stream(
             __name__, "schemas/wrapper_schema.json"
         )
-        # print(json_data)
-        # with open('/schemas/wrapper_schema.json') as json_data:
         schema = json.load(json_file)
-        # schema = json_data
         try:
             validate = fastjsonschema.compile(schema)
             validate(json.loads(json_init))
