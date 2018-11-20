@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="prfilterutility",
-    version="0.0.4",
+    version="0.0.5",
     author="Mariam Jamal",
     author_email="mjamal@folio3.com",
     include_package_data=True,
@@ -19,8 +19,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'
     ],
     test_suite='tests',
 )
