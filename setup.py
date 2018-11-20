@@ -2,10 +2,11 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name="pr_filter_utility",
+    name="prfilterutility",
     version="0.0.1",
     author="Mariam Jamal",
     author_email="mjamal@folio3.com",
+    include_package_data=True,
     description="Package to provide utility tools for Github Pull Requests",
     long_description="Package to provide find pull requests for Github repos"
                      "with commit and file filters",
