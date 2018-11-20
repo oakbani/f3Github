@@ -4,14 +4,20 @@ from gwrapper.number_filter import Filter
 from gwrapper.string_filter import String_Filter
 import json
 import logging
+import pkg_resources
 import requests
 
 
 class GWrapper(object):
     def __new__(cls, json_init, logger=None):
         logger = logger or logger_interface.NoOpLogger()
-        with open('gwrapper/schemas/wrapper_schema.json') as json_data:
-            schema = json.load(json_data)
+        json_file = pkg_resources.resource_stream(
+            __name__, "schemas/wrapper_schema.json"
+        )
+        # print(json_data)
+        # with open('/schemas/wrapper_schema.json') as json_data:
+        schema = json.load(json_file)
+        # schema = json_data
         try:
             validate = fastjsonschema.compile(schema)
             validate(json.loads(json_init))
