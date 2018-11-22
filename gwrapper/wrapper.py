@@ -4,17 +4,17 @@ from gwrapper.number_filter import Filter
 from gwrapper.string_filter import String_Filter
 import json
 import logging
-import pkg_resources
+import os
+# import pkg_resources
 import requests
 
 
 class GWrapper(object):
     def __new__(cls, json_init, logger=None):
         logger = logger or logger_interface.NoOpLogger()
-        json_file = pkg_resources.resource_stream(
-            __name__, "schemas/wrapper_schema.json"
-        )
-        schema = json.load(json_file)
+        with open(os.path.join(os.path.dirname(__file__),
+                               'schemas\\wrapper_schema.json')) as json_file:
+            schema = json.load(json_file)
         try:
             validate = fastjsonschema.compile(schema)
             validate(json.loads(json_init))
@@ -78,9 +78,8 @@ class GWrapper(object):
 
     # get pull requests by file name keywords
     def get_pr_by_file_name(self, name_list, filter, **params):
-        pull_requests = self.list_pulls(params)
         f = String_Filter(
-            pull_requests, name_list, filter, 'files', self.auth
+            self.list_pulls(params), name_list, filter, 'files', self.auth
         )
         response = f.filter_by_string()
         msg = str(len(response)) + ' pull requests found with file name filter'
