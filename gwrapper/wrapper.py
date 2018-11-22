@@ -13,7 +13,7 @@ class GWrapper(object):
     def __new__(cls, json_init, logger=None):
         logger = logger or logger_interface.NoOpLogger()
         with open(os.path.join(os.path.dirname(__file__),
-                               'schemas\\wrapper_schema.json')) as json_file:
+                               'schemas/wrapper_schema.json')) as json_file:
             schema = json.load(json_file)
         try:
             validate = fastjsonschema.compile(schema)
