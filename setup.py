@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="prfilterutility",
-    version="0.0.4",
+    version="0.0.8",
     author="Mariam Jamal",
     author_email="mjamal@folio3.com",
     include_package_data=True,
